@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Планер</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/chart.js@3.7.1/dist/chart.min.css">
+    <link rel="stylesheet" href="style.css">
+    <link rel="manifest" href="manifest.json">
+</head>
+<body class="light-theme">
+    <div id="side-menu" class="side-menu">
+        <div class="side-menu-content">
+            <button id="close-menu" class="close-menu">×</button>
+            <div class="theme-controls">
+                <h3>Тема</h3>
+                <label class="switch">
+                    <input type="checkbox" id="theme-toggle">
+                    <span class="slider round"></span>
+                </label>
+                <span>Тёмная тема</span>
+            </div>
+            <div class="auto-theme">
+                <label>
+                    <input type="checkbox" id="auto-theme-toggle">
+                    Автоматическая тема
+                </label>
+            </div>
+            <div class="view-controls">
+                <h3>Вид</h3>
+                <select id="view-selector">
+                    <option value="day">День</option>
+                    <option value="week">Неделя</option>
+                    <option value="month">Месяц</option>
+                </select>
+            </div>
+            <div class="group-controls">
+                <h3>Группы задач</h3>
+                <div id="group-list"></div>
+                <button id="add-group">Добавить группу</button>
+            </div>
+            <div class="statistics">
+                <h3>Статистика</h3>
+                <canvas id="stats-chart"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <main>
+        <div class="top-bar">
+            <button id="menu-button">☰</button>
+            <div class="date-navigation">
+                <button id="prev-day">←</button>
+                <div class="date-buttons">
+                    <button data-date="yesterday">Вчера</button>
+                    <button data-date="today" class="active">Сегодня</button>
+                    <button data-date="tomorrow">Завтра</button>
+                </div>
+                <button id="next-day">→</button>
+                <input type="text" id="date-picker" placeholder="Выбрать дату">
+            </div>
+        </div>
+
+        <div class="task-container">
+            <form id="task-form">
+                <input type="text" id="task-input" placeholder="Введите задачу" required>
+                <input type="text" id="time-picker" placeholder="Время">
+                <select id="task-group">
+                    <option value="">Без группы</option>
+                </select>
+                <button type="submit">Добавить</button>
+            </form>
+
+            <div id="timeline"></div>
+        </div>
+    </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="app.js"></script>
+    <script>
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('/service-worker.js')
+                .then((reg) => console.log('Service worker registered', reg))
+                .catch((err) => console.log('Service worker not registered', err));
+        }
+    </script>
+</body>
+</html>
